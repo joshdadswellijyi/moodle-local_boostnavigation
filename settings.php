@@ -66,6 +66,12 @@ if ($hassiteconfig) {
                 get_string('setting_removenodesheading', 'local_boostnavigation', null, true),
                 ''));
 
+        // Add option to remove nodes instead of hide them
+        $page->add(new admin_setting_configcheckbox('local_boostnavigation/forceremovalnothide',
+                get_string('setting_forceremovalnothide', 'local_boostnavigation', null, true),
+                get_string('setting_forceremovalnothide_desc', 'local_boostnavigation', null, true),
+                0));
+
         // Create remove myhome node control widget (switch label and description depending on what will really happen on the site).
         if (get_config('core', 'defaulthomepage') == HOMEPAGE_SITE) {
             $page->add(new admin_setting_configcheckbox('local_boostnavigation/removemyhomenode',

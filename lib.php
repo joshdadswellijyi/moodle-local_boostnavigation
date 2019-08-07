@@ -52,7 +52,11 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
         // If yes, do it.
         if ($homenode = $navigation->find('home', global_navigation::TYPE_ROOTNODE)) {
             // Hide home node.
-            $homenode->showinflatnavigation = false;
+            if (isset($config->forceremovalnothide) && $config->forceremovalnothide) {
+                $homenode->remove();
+            } else {
+                $homenode->showinflatnavigation = false;
+            }
         }
     }
 
@@ -61,7 +65,11 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
         // If yes, do it.
         if ($calendarnode = $navigation->find('calendar', global_navigation::TYPE_CUSTOM)) {
             // Hide calendar node.
-            $calendarnode->showinflatnavigation = false;
+            if (isset($config->forceremovalnothide) && $config->forceremovalnothide) {
+                $calendarnode->remove();
+            } else {
+                $calendarnode->showinflatnavigation = false;
+            }
         }
     }
 
@@ -70,7 +78,22 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
         // If yes, do it.
         if ($privatefilesnode = $navigation->find('privatefiles', global_navigation::TYPE_SETTING)) {
             // Hide privatefiles node.
-            $privatefilesnode->showinflatnavigation = false;
+            if (isset($config->forceremovalnothide) && $config->forceremovalnothide) {
+                $privatefilesnode->remove();
+            } else {
+                $privatefilesnode->showinflatnavigation = false;
+            }
+        }
+    }
+
+
+    // we need to remove the courses block if we want to be able to create our own
+    if (isset($config->removemycoursesnode) && $config->removemycoursesnode == true) {
+        $coursenode = $navigation->find('courses', global_navigation::TYPE_ROOTNODE);
+        if ($coursenode) {
+            if (isset($config->forceremovalnothide) && $config->forceremovalnothide) {
+                $coursenode->remove();
+            }
         }
     }
 
@@ -83,24 +106,28 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
     if (isset($config->removemycoursesnode) && $config->removemycoursesnode == true) {
         // If yes, do it.
         if ($mycoursesnode) {
-            // Hide mycourses node.
-            $mycoursesnode->showinflatnavigation = false;
+            if (isset($config->forceremovalnothide) && $config->forceremovalnothide) {
+                $mycoursesnode->remove();
+            } else {
+                // Hide mycourses node.
+                $mycoursesnode->showinflatnavigation = false;
 
-            // Hide all courses below the mycourses node.
-            foreach ($mycourseschildrennodeskeys as $k) {
-                // If the admin decided to display categories, things get slightly complicated.
-                if ($CFG->navshowmycoursecategories) {
-                    // We need to find all children nodes first.
-                    $allchildrennodes = local_boostnavigation_get_all_childrenkeys($mycoursesnode->get($k));
-                    // Then we can hide each children node.
-                    // Unfortunately, the children nodes have navigation_node type TYPE_MY_CATEGORY or navigation_node type
-                    // TYPE_COURSE, thus we need to search without a specific navigation_node type.
-                    foreach ($allchildrennodes as $cn) {
-                        $mycoursesnode->find($cn, null)->showinflatnavigation = false;
+                // Hide all courses below the mycourses node.
+                foreach ($mycourseschildrennodeskeys as $k) {
+                    // If the admin decided to display categories, things get slightly complicated.
+                    if ($CFG->navshowmycoursecategories) {
+                        // We need to find all children nodes first.
+                        $allchildrennodes = local_boostnavigation_get_all_childrenkeys($mycoursesnode->get($k));
+                        // Then we can hide each children node.
+                        // Unfortunately, the children nodes have navigation_node type TYPE_MY_CATEGORY or navigation_node type
+                        // TYPE_COURSE, thus we need to search without a specific navigation_node type.
+                        foreach ($allchildrennodes as $cn) {
+                            $mycoursesnode->find($cn, null)->showinflatnavigation = false;
+                        }
+                        // Otherwise we have a flat navigation tree and hiding the courses is easy.
+                    } else {
+                        $mycoursesnode->get($k)->showinflatnavigation = false;
                     }
-                    // Otherwise we have a flat navigation tree and hiding the courses is easy.
-                } else {
-                    $mycoursesnode->get($k)->showinflatnavigation = false;
                 }
             }
         }

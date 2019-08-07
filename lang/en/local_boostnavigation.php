@@ -235,7 +235,7 @@ $string['setting_removemycoursesnode_desc'] = 'Enabling this setting will remove
 $string['setting_removemycoursesnode'] = 'Remove "My courses" node';
 $string['setting_removemycoursesnodeperformancehint'] = 'Please note: If you enable this setting and have also enabled the setting <a href="{$a->url}">navshowmycoursecategories</a>, removing the "My courses" node takes more time and you should consider disabling the navshowmycoursecategories setting.';
 $string['setting_removenodesheading'] = 'Remove root nodes from Boost\'s nav drawer';
-$string['setting_removenodestechnicalhint'] = 'Technical background: This is done by setting the node\'s showinflatnavigation attribute to false. Thus, the node will only be hidden from the nav drawer, but it will remain in the navigation tree and can still be accessed by other parts of Moodle.';
+$string['setting_removenodestechnicalhint'] = 'Technical background: This is done by setting the node\'s showinflatnavigation attribute to false. Thus, the node will only be hidden from the nav drawer, but it will remain in the navigation tree and can still be accessed by other parts of Moodle. Unless forceremovalnothide is true in which case the whole item is removed';
 $string['setting_removeparticipantscoursenode_desc'] = 'Enabling this setting will remove the "Participants" node from Boost\'s nav drawer. It is removed for all users, regardless of a users capabilities.';
 $string['setting_removeparticipantscoursenode'] = 'Remove "Participants" node';
 $string['setting_removeprivatefilesnode_desc'] = 'Enabling this setting will remove the "Private files" node from Boost\'s nav drawer.';
@@ -245,3 +245,6 @@ $string['setting_removesecondhomenode'] = 'Remove second "Home" or "Dashboard" n
 $string['settingspage_rootnodes'] = 'Root nodes';
 $string['settingspage_coursenodes'] = 'Course nodes';
 $string['settingspage_bottomnodes'] = 'Bottom nodes';
+$string['setting_forceremovalnothide_desc'] = 'Enabling this setting will remove menu items instead of hiding them, this will allow you to overide defaults easier.';
+$string['setting_forceremovalnothide'] = 'Remove nodes instead of hiding them.';
+$string['setting_forceremovalnothidetechnicalhint'] = 'Please Note: with this setting enabled the items will be removed from the navigation entirely and will not be available in any part of moodle.';
